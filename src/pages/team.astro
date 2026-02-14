@@ -1,0 +1,194 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+/**
+ * ✅ 分工表（圖片版型，但先用中性配色）
+ * - 不用深藍/亮黃，改成灰白黑（耐看、先不綁定主視覺）
+ * - 左右兩欄排版（手機會自動變單欄）
+ *
+ * ✅ 已移除所有座號，只保留姓名
+ */
+
+// 左欄
+const leftBlocks = [
+    {
+    title: "行政組",
+    rows: [
+        { label: "總召", people: "蘇冠宇" },
+        { label: "副召", people: "詹緯濬" },
+    ],
+    },
+  {
+    title: "文宣組",
+    rows: [
+      { label: "組長", people: "顏廷翰" },
+      { label: "美術", people: "吳祉樂、邱懷賦" },
+      { label: "手冊", people: "崔恩睿、黃楷博" },
+      { label: "簡報", people: "李牧寬、藍翊庭" },
+      { label: "衣服", people: "施秉辰、闕子宸" },
+      { label: "宣傳", people: "杜時晴、林煜軒" },
+      { label: "網站", people: "彭耀霆、楊翊程" },
+    ],
+  },
+  {
+    title: "財務組",
+    rows: [
+      { label: "總務", people: "尤耀星" },
+      { label: "採購", people: "黃品鈞" },
+    ],
+  },
+];
+
+// 右欄
+const rightBlocks = [
+  {
+    title: "影片組",
+    rows: [
+      { label: "組長/導演", people: "張宸睿" },
+      { label: "編劇", people: "涂皓宇、張瑛太" },
+      { label: "主演", people: "王昱閎、周紘宇、賴敬宇" },
+      { label: "剪輯", people: "曾宣澂" },
+      { label: "拍攝", people: "林秉坤" },
+    ],
+  },
+  {
+    title: "音樂組",
+    rows: [
+      { label: "組長", people: "張庭溱" },
+      { label: "編曲", people: "吳耘丞、張庭溱" },
+      { label: "作曲", people: "張庭溱" },
+      { label: "作詞", people: "張庭溱" },
+      { label: "後製", people: "周紘宇" },
+    ],
+  },
+  {
+    title: "活動組",
+    rows: [
+      { label: "策畫", people: "陳柏廷、蕭敬庭" },
+      { label: "主持人(2F)", people: "吳祉樂、張宸睿" },
+      { label: "主持人(4F)", people: "黃品鈞、鄧靖懷" },
+
+    ],
+  },
+];
+---
+
+<BaseLayout title="工作人員名單｜Sparkle">
+  <div class="page">
+    <h1 class="pageTitle">工作人員名單</h1>
+
+    <div class="columns">
+      <div class="col">
+        {leftBlocks.map((b) => (
+          <section class="block">
+            <div class="bar">{b.title}</div>
+            <div class="rows">
+              {b.rows.map((r) => (
+                <div class="row">
+                  <div class="label">{r.label}</div>
+                  <div class="people">{r.people}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div class="col">
+        {rightBlocks.map((b) => (
+          <section class="block">
+            <div class="bar">{b.title}</div>
+            <div class="rows">
+              {b.rows.map((r) => (
+                <div class="row">
+                  <div class="label">{r.label}</div>
+                  <div class="people">{r.people}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* ✅ 中性配色（之後你決定主視覺再換） */
+    .page {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      min-height: 70vh;
+    }
+
+    .pageTitle {
+    /* ✅ 模仿範例：大、粗、置中、字距 */
+    margin: 0 0 26px;
+    text-align: center;
+    font-weight: 900;
+    letter-spacing: 10px;     /* ✅ 範例那種「拉開」的感覺 */
+    font-size: 56px;          /* ✅ 大標題 */
+    line-height: 1.1;
+
+    /* ✅ 先用中性顏色（不決定主色前） */
+    color: #111;
+
+    /* ✅ 確保不會自己換行（避免變成兩行不好看） */
+    white-space: nowrap;
+    }
+
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .columns { grid-template-columns: 1fr; }
+      .pageTitle { font-size: 32px; }
+    }
+
+    .block { margin-bottom: 22px; }
+
+    /* ✅ 標題條：中性灰，不用特殊顏色 */
+    .bar {
+      background: #f3f4f6;
+      color: #111;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .rows { padding: 12px 10px 0; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .row:last-child { border-bottom: none; }
+
+    .label {
+      color: #111;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .people {
+      color: #111;
+      font-size: 18px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    @media (max-width: 520px) {
+      .row { grid-template-columns: 1fr; }
+      .people { text-align: left; }
+    }
+  </style>
+</BaseLayout>

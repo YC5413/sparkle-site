@@ -1,11 +1,31 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+/**
+ * ✅ 首頁的外殼：
+ * - 主標題 + 日期地點
+ * - 兩個入口按鈕
+ * - 亮點卡片（先用 placeholder）
+ */
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Sparkle｜成果發表">
+  <section style="padding: 18px 0 10px;">
+    <h1 style="margin: 0 0 8px;">Sparkle 成果發表</h1>
+    <p class="muted" style="margin: 0 0 14px;">
+      日期：2026/xx/xx　地點：xxx　入場：自由/需報名（先填 placeholder）
+    </p>
+
+    <a class="btn" href="/projects/">看專題</a>
+    <a class="btn" href="/schedule/" style="margin-left:10px;">看流程</a>
+  </section>
+
+  <section style="margin-top: 18px;">
+    <h2>精選亮點</h2>
+    <div class="grid">
+      <div class="card"><b>亮點 1</b><div class="muted">一句話描述</div></div>
+      <div class="card"><b>亮點 2</b><div class="muted">一句話描述</div></div>
+      <div class="card"><b>亮點 3</b><div class="muted">一句話描述</div></div>
+    </div>
+  </section>
+</BaseLayout>

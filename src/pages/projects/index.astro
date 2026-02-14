@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+/**
+ * ✅ 專題分類 Tabs（沒有「全部」tab）
+ * - /projects/            -> 顯示全部
+ * - /projects/?cat=數學    -> 只顯示數學
+ */
+
+// 你要的分類
+const CATEGORIES = ["數學", "物理", "化學", "生物", "資訊", "地科"];
+
+// 讀取網址 query: ?cat=...
+const currentCat = Astro.url.searchParams.get("cat");
+const activeCat = currentCat && CATEGORIES.includes(currentCat) ? currentCat : "全部";
+
+/**
+ * ✅ 依你指定數量建立假資料：
+ * - 數學 3
+ * - 物理 6
+ * - 生物 6
+ * - 資訊 6
+ * - 化學 7
+ * - 地科 1
+ */
+const make = (cat: string, count: number, startId: number) =>
+  Array.from({ length: count }).map((_, i) => ({
+    slug: `${cat}-${startId + i}`, // ✅ 之後你換真資料時，slug 會改成你想要的
+    title: `${cat} 專題 ${i + 1}：題目先放這裡`,
+    summary: "一句話摘要（placeholder）",
+    category: cat,
+  }));
+
+let id = 1;
+const fakeProjects = [
+  ...make("數學", 3, id), (id += 3, null),
+  ...make("物理", 6, id), (id += 6, null),
+  ...make("化學", 7, id), (id += 7, null),
+  ...make("生物", 6, id), (id += 6, null),
+  ...make("資訊", 6, id), (id += 6, null),
+  ...make("地科", 1, id),
+].filter(Boolean) as any[];
+
+// 依分類篩選
+const projects =
+  activeCat === "全部" ? fakeProjects : fakeProjects.filter((p) => p.category === activeCat);
+---
+
+<BaseLayout title="專題｜Sparkle">
+  <h1>專題總覽</h1>
+  <p class="muted">
+    目前：{activeCat === "全部" ? "全部專題" : activeCat}
+  </p>
+
+  <!-- ✅ 分類小分頁（沒有「全部」） -->
+  <div class="tabs" style="margin: 10px 0 18px;">
+    {CATEGORIES.map((cat) => {
+      const href = `/projects/?cat=${encodeURIComponent(cat)}`;
+      const isActive = cat === activeCat;
+      return (
+        <a class={`tab ${isActive ? "active" : ""}`} href={href}>
+          {cat}
+        </a>
+      );
+    })}
+  </div>
+
+  <div class="grid">
+    {projects.map((p) => (
+      <div class="card">
+        <div class="muted">{p.category}</div>
+        <b>{p.title}</b>
+        <div class="muted">{p.summary}</div>
+        <div style="margin-top:10px;">
+          <a class="btn" href={`/projects/${p.slug}/`}>查看</a>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <style>
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tab {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 14px;
+    }
+    .tab:hover { background: #f7f7f7; }
+    .tab.active { background: #111; color: #fff; border-color: #111; }
+  </style>
+</BaseLayout>
