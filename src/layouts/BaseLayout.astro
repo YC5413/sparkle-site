@@ -8,6 +8,7 @@
  * - 全站字體/顏色/按鈕/卡片
  * 都在這裡改
  */
+const BASE = import.meta.env.BASE_URL;
 const { title = "Sparkle", description = "Sparkle 成果發表網站" } = Astro.props;
 ---
 
@@ -92,10 +93,12 @@ const { title = "Sparkle", description = "Sparkle 成果發表網站" } = Astro.
       <div class="wrap nav">
         <a class="brand" href="/">Sparkle</a>
         <nav>
-          <a href="/schedule/">流程</a>
-          <a href="/projects/">專題</a>
-          <a href="/team/">分工</a>
-          <a href="/about/">關於</a>
+          <a href={`${BASE}`}>Sparkle</a>
+          <a href={`${BASE}schedule/`}>流程</a>
+          <a href={`${BASE}projects/`}>專題</a>
+          <a href={`${BASE}about/`}>關於</a>
+          <a href={`${BASE}team/`}>分工</a>
+
         </nav>
       </div>
     </header>
